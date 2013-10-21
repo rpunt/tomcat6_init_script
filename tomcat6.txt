@@ -150,7 +150,8 @@ function stop() {
 		if [ "$RETVAL" -eq "0" ]; then
 			touch /var/lock/subsys/${NAME} 2>&1 || RETVAL="4"
 			[ "$RETVAL" -eq "0" ] && $SU - $TOMCAT_USER -c "${TOMCAT_SCRIPT} stop" >> ${TOMCAT_LOG} 2>&1 || RETVAL="4"
-		else
+		fi
+		if [ "$RETVAL" -ne "0"]; then
 			count="0"
 			if [ -f "${CATALINA_PID}" ]; then
 				read kpid < ${CATALINA_PID}
